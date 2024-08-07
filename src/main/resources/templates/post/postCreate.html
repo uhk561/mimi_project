@@ -4,25 +4,53 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<div class="w-50">
-
-		<input type="text" id="subject" class="form-control mb-4" placeholder="상호명:">
-		<input type="text" id="subject" class="form-control mb-4" placeholder="위치:">
-		<div class="d-flex">
-			<input type="text" id="subject" class="form-control w-50 mr-4" placeholder="언제 방문하셨나요?">
-			<input type="text" id="subject" class="form-control w-50" placeholder="카테고리:">
+	<div class="container mt-4 w-50">
+		<div class="d-flex justify-content-center align-items-center mb-3">
+			<input type="text"class="form-control col-8" id="restaurantsName" name="restaurant_name"placeholder="상호명을 입력하세요">
+		</div>	
+		
+		<div class="d-flex justify-content-center align-items-center mb-3">
+			<input type="text" class="form-control col-8" id="address" name="address" placeholder="위치를 입력하세요">
 		</div>
-		<div class="d-flex justify-content-end my-3">
-			<input type="file" id="file" accept=".jpg, .png, .gif">
+		
+		<div class="d-flex justify-content-center align-items-center mb-3">
+			<input type="date" class="form-control col-4" id="visitDate" name="visitDate">
+		
+		
+			<select id="category" class="custom-select ml-1 col-4">
+				<option selected>선택해주세요.</option>
+				<option value="한식" class="font-weight-bold">한식</option>
+				<option value="중식" class="font-weight-bold">중식</option>
+				<option value="일식" class="font-weight-bold">일식</option>
+				<option value="양식" class="font-weight-bold">양식</option>
+				<option value="기타" class="font-weight-bold">기타</option>	
+			</select>
 		</div>
-
-		<div class="d-flex justify-content-between">
-			<button type="button" id="postListBtn" class="btn btn-dark">목록</button>
-
-			<div>
-				<button type="button" id="clearBtn" class="btn btn-secondary">모두 지우기</button>
-				<button type="button" id="saveBtn" class="btn btn-warning">저장</button>
+		
+		<div class="text-center m-5">
+			<h4 class="font-weight-bold">음식은 어떠셨나요?</h4>
+			<div class="ratingStars">
+				<label for="rate1">⭐</label><input type="radio" name="rating" value="5" id="rate1" class="rateRadio">
+				<label for="rate2">⭐</label><input type="radio" name="rating" value="4" id="rate2" class="rateRadio">
+				<label for="rate3">⭐</label><input type="radio" name="rating" value="3" id="rate3" class="rateRadio">
+				<label for="rate4">⭐</label><input type="radio" name="rating" value="2" id="rate4" class="rateRadio">
+				<label for="rate5">⭐</label><input type="radio" name="rating" value="1" id="rate5" class="rateRadio">
+				<!-- 별점 -->
 			</div>
+		</div>
+		<div class="write-box border rounded ml-5">
+		<textarea id="writeTextArea" placeholder="간단하고 솔직하게 남겨보세요.(내용)" class="w-100 border-0 form-control"></textarea>
+		<div class="d-flex justify-content-between">
+			<div class="file-upload d-flex">
+			<!-- file 태그를 숨겨두고 이미지를 클릭하면 파일을 클릭한 것과 같은 효과를 준다. -->
+			<input type="file" id="file" accept=".jpg, .png, .gif" class="d-none">
+
+			<!-- 이미지에 마우스 올리면 마우스 커서가 link로 변경 -->
+			<a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
+
+			<div id="fileName" class="ml-2"></div>
+			</div>
+			<button id="writeBtn" class="btn text-white">업로드</button>
 		</div>
 	</div>
 </section>
