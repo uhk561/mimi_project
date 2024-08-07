@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header class="mb-5" th:fragment="headerFragment">
+	<div class="h-100 d-flex justify-content-between align-items-center mx-4">
+		<!-- 로고 영역 -->
+		<div>
+			<a href="/timeline/timeline-view"><h1><b>미미</b><small>(美味)</small></h1></a>
+		</div>
+		<!-- 로그인 영역 -->
+			<div class="d-flex">
+				<div th:if="${session.userId != null}">
+					<b><span th:text="${session.userName} + '님 안녕하세요.'" class="mr-4"></span></b>
+					<a href="/user/sign-out">로그아웃</a>
+				</div>
+				<div th:unless="${session.userId != null}" class="mr-4">
+					<a href="/user/sign-up-view">회원가입</a>
+				</div>
+				<div th:unless="${session.userId != null}">
+					<a href="/user/sign-in-view">로그인</a>
+				</div>
+			</div>
+	</div>
+</header>
+</html>
