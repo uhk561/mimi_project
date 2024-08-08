@@ -2,15 +2,18 @@
 
 a, a:hover {text-decoration:none; color:#000;}
 
-header {height:80px; background-color:#E3EA19;}
-.sign-up-box {width:650px; background-color:#ebebeb; margin-top:20px; box-shadow:5px 5px 5px 5px #BDC0C0;}
+header {height:80px; background-color:#E3EA19; position:fixed; z-index: 999;}
+.sign-up-box {width:650px; background-color:#ebebeb; margin-top:180px; box-shadow:5px 5px 5px 5px #BDC0C0;}
 .sign-up-subject {margin:20px; font-weight:bold;}
 
 #signUpBtn, #signInBtn {background-color:#E3EA19;}
 
 .write-box {height:100px; width:800px;}
-#btn {background-color:#E3EA19; height:30px;}
+.btn {background-color:#E3EA19;;}
 #writeBtn {background-color:#E3EA19;}
+#serachBtn {background-color:#E3EA19;}
+.comment-btn {background-color:#E3EA19;}
+
 
 /*  글쓰기 별점 선택 부분 */
 .ratingStars { border: 0; direction: rtl;}
@@ -27,11 +30,17 @@ header {height:80px; background-color:#E3EA19;}
 
 /* 여기까지 별점 */
 
-.shadow-box {width:550px; background-color:#ebebeb; margin-top:20px; box-shadow:5px 5px 5px 5px #BDC0C0;}
+.shadow-box {width:550px; background-color:#ebebeb; margin-top:200px; box-shadow:5px 5px 5px 5px #BDC0C0;}
 .login-box {width:400px;}
 
-.contents-box {width:650px;}
+.contents-box {width:790px; margin-top:90px;}
+.postCreate {margin-top:120px;}
+
+/* .range, #serachBtn, #serachWrite {width:300px; position:fixed;} */
+.sideBar {width:300px; position:fixed;  top: 95px;
+  left: 10px;  z-index: 999;}
+
 
 #writeTextArea {height:100px;}
 
-.comment-input {width:565px;}
+.comment-input {width:670px;}
