@@ -6,8 +6,10 @@
 <section layout:fragment="content" class="contents d-flex justify-content-center">
 	<div class="sideBar">
 		<div id="search" class="d-flex align-items-center">
-			<input id="serachWrite" type="text" class="form-control ml-3 w-75" placeholder="지역을 검색해보세요">
-			<button id="serachBtn" class="btn">검색</button>
+			<input id="addressSerach" type="text" class="form-control ml-3 w-75" name="addressSerach" placeholder="지역을 검색해보세요"  readonly />
+			<!-- <input type="text" class="form-control col-7" id="address" name="address" placeholder="주소를 검색하세요"  readonly /> -->
+			<!-- <button id="serachBtn" class="btn">검색</button> -->
+			<a href="#" id="serachBtn" onclick="execDaumPostcode()"><img width="35" src="https://cdn-icons-png.freepik.com/256/13924/13924517.png?semt=ais_hybrid"></a>
 		</div>
         <div class="range mt-3">
 			<h5>정렬</h5>
@@ -103,6 +105,12 @@
 
 <th:block layout:fragment="script">
     <script>
-
+	    function execDaumPostcode() {
+			new daum.Postcode({
+				oncomplete: function(data) {
+	            	document.getElementById('addressSerach').value = data.address;
+				}
+			}).open();
+		}
     </script>
 </th:block>

@@ -33,13 +33,13 @@ header {height:80px; background-color:#E3EA19; position:fixed; z-index: 999;}
 .shadow-box {width:550px; background-color:#ebebeb; margin-top:200px; box-shadow:5px 5px 5px 5px #BDC0C0;}
 .login-box {width:400px;}
 
-.contents-box {width:790px; margin-top:90px;}
+.contents-box { width:790px; margin-top:90px;}
 .postCreate {margin-top:120px;}
 
 /* .range, #serachBtn, #serachWrite {width:300px; position:fixed;} */
-.sideBar {width:300px; position:fixed;  top: 95px;
-  left: 10px;  z-index: 999;}
-
+.sideBar {position:fixed;  top: 95px; 
+  left: 10px;  z-index: 999; width: 20vw;}
+/* width:300px;    < 사이드바           width:790px;   < 콘텐츠 박스 */
 
 #writeTextArea {height:100px;}
 
