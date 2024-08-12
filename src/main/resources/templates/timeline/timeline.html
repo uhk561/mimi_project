@@ -105,12 +105,18 @@
 
 <th:block layout:fragment="script">
     <script>
-	    function execDaumPostcode() {
-			new daum.Postcode({
-				oncomplete: function(data) {
-	            	document.getElementById('addressSerach').value = data.address;
-				}
-			}).open();
-		}
+    function execDaumPostcode() {
+		var themeObj = {
+				   bgColor: "#E3EA19", //바탕 배경색
+				   emphTextColor: "#000" //강조 글자색
+				};
+			  
+		new daum.Postcode({
+			 theme: themeObj,
+			oncomplete: function(data) {
+            	document.getElementById('address').value = (data.sigungu+ " " + data.bname);
+			}
+		}).open();
+	}
     </script>
 </th:block>

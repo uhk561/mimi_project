@@ -15,7 +15,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-center align-items-center mb-3">
-			<input type="date" class="form-control col-4" id="visitDate" name="visitDate">
+			<input type="text" class="form-control col-4" id="visitDate" name="visitDate" placeholder="언제 방문하셨나요?">
 		
 		
 			<select id="category" class="custom-select ml-1 col-4">
@@ -31,11 +31,11 @@
 		<div class="text-center m-5">
 			<h4 class="font-weight-bold">음식은 어떠셨나요?</h4>
 			<div class="ratingStars">
-				<label for="rate1">⭐</label><input type="radio" name="rating" value="5" id="rate1" class="rateRadio">
-				<label for="rate2">⭐</label><input type="radio" name="rating" value="4" id="rate2" class="rateRadio">
-				<label for="rate3">⭐</label><input type="radio" name="rating" value="3" id="rate3" class="rateRadio">
-				<label for="rate4">⭐</label><input type="radio" name="rating" value="2" id="rate4" class="rateRadio">
-				<label for="rate5">⭐</label><input type="radio" name="rating" value="1" id="rate5" class="rateRadio">
+				<input type="radio" name="rating" value="5" id="rate1" class="rateRadio"><label for="rate1">⭐</label>
+				<input type="radio" name="rating" value="4" id="rate2" class="rateRadio"><label for="rate2">⭐</label>
+				<input type="radio" name="rating" value="3" id="rate3" class="rateRadio"><label for="rate3">⭐</label>
+				<input type="radio" name="rating" value="2" id="rate4" class="rateRadio"><label for="rate4">⭐</label>
+				<input type="radio" name="rating" value="1" id="rate5" class="rateRadio"><label for="rate5">⭐</label>
 				<!-- 별점 -->
 			</div>
 		</div>
@@ -43,13 +43,12 @@
 		<textarea id="writeTextArea" placeholder="간단하고 솔직하게 남겨보세요.(내용)" class="w-100 border-0 form-control"></textarea>
 		<div class="d-flex justify-content-between">
 			<div class="file-upload d-flex">
-			<!-- file 태그를 숨겨두고 이미지를 클릭하면 파일을 클릭한 것과 같은 효과를 준다. -->
-			<input type="file" id="file" accept=".jpg, .png, .gif" class="d-none">
-
-			<!-- 이미지에 마우스 올리면 마우스 커서가 link로 변경 -->
-			<a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
-
-			<div id="fileName" class="ml-2"></div>
+				<!-- file 태그를 숨겨두고 이미지를 클릭하면 파일을 클릭한 것과 같은 효과를 준다. -->
+				<input type="file" id="file" accept=".jpg, .png, .gif" class="d-none">
+	
+				<!-- 이미지에 마우스 올리면 마우스 커서가 link로 변경 -->
+				<a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
+				<div id="fileName" class="ml-2"></div>
 			</div>
 			<button id="writeBtn" class="btn text-white">업로드</button>
 		</div>
@@ -58,12 +57,117 @@
 
 <th:block layout:fragment="script">
     <script>
-		function execDaumPostcode() {
-			new daum.Postcode({
-				oncomplete: function(data) {
-                	document.getElementById('address').value = data.address;
-				}
-			}).open();
-		}
+    function execDaumPostcode() {
+		var themeObj = {
+				   bgColor: "#E3EA19", //바탕 배경색
+				   emphTextColor: "#000" //강조 글자색
+				};
+			  
+		new daum.Postcode({
+			 theme: themeObj,
+			oncomplete: function(data) {
+            	document.getElementById('address').value = (data.sigungu+ " " + data.bname);
+			}
+		}).open();
+	}
+
+
+		 $(document).ready(function() {
+			 $.datepicker.setDefaults({
+                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] // 요일을 한글로 변경
+                 , dateFormat: 'yy-mm-dd' + " 방문"
+             });
+			 $('#visitDate').datepicker({
+				 maxDate:0
+                 })   /* 데이트 피커 끝*/
+                 $("#fileUploadBtn").on('click', function(e) {
+     				e.preventDefault(); // 위로 올라가는 현상 방지
+     				//alert("클릭");
+     				$("#file").click(); // input type="file" 클릭
+     			});
+                 
+				// 파일이 선택될 때, 1.유효성 체크  2.파일명 노출
+				$("#file").on('change', function(e) {
+					// 취소를 누를 때 처리(파일이 비워지므로 .name에서 에러 발생)
+					let file = e.target.files[0];
+					if (file == null) {
+						$("#file").val("");
+						$("#fileName").text("");
+						return;
+					}
+					
+					//alert("이미지 선택");
+					let fileName = e.target.files[0].name; // leaves-8724660_640.jpg
+					console.log(fileName);
+					
+					// 1. 확장자 validation
+					let ext = fileName.split(".").pop().toLowerCase();
+					console.log(ext);
+					
+					if (ext != "gif" && ext != "png" && ext != "jpg") {
+						alert("이미지 파일만 업로드 할 수 있습니다.");
+						$("#file").val(""); // 파일 태그에 올라온 것 제거(보이지 않지만 꼭! 처리)
+						$("#fileName").text(""); // 보여지고 있는 파일명 초기화
+						return;
+					}
+					
+					// 2. 파일명 노출
+					$("#fileName").text(fileName);
+				});
+				
+				// 글쓰기
+				$("#writeBtn").on('click', function() {
+					
+					
+					
+					// 내용 비필수
+					let content = $('#writeTextArea').val();
+					
+					// 이미지 필수
+					let file = $('#file').val();
+					if (file == '') {
+						alert('파일을 업로드 해주세요');
+						return;
+					}
+					
+					// 파일이 업로드 된 경우 확장자 체크
+					let ext = file.split('.').pop().toLowerCase(); // 파일 경로를 .으로 나누고 확장자가 있는 마지막 문자열을 가져온 후 모두 소문자로 변경
+					if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+						alert("gif, png, jpg, jpeg 파일만 업로드 할 수 있습니다.");
+						$('#file').val(''); // 파일을 비운다.
+						return;
+					}
+					
+					// 폼태그를 자바스크립트에서 만든다.
+					let formData = new FormData();
+					formData.append("content", content);
+					formData.append("file", $('#file')[0].files[0]); // $('#file')[0]은 첫번째 input file 태그를 의미, files[0]는 업로드된 첫번째 파일
+					
+					// AJAX form 데이터 전송
+					$.ajax({
+						// request
+						type: "post"
+						, url: "/post/create"
+						, data: formData
+						, enctype: "multipart/form-data"    // 파일 업로드를 위한 필수 설정
+						, processData: false    // 파일 업로드를 위한 필수 설정
+						, contentType: false    // 파일 업로드를 위한 필수 설정
+						
+						// response
+						, success: function(data) {
+							if (data.code == 200) {
+								location.reload();
+							} else if (data.code == 403) { // 비로그인 일 때
+								location.href = "/user/sign-in-view";
+							} else {
+								alert(data.error_message);
+							}
+						}
+						, error: function(e) {
+							alert("글 저장에 실패했습니다. 관리자에게 문의해주세요.");
+						}
+					});  // --- ajax 끝
+				});
+		 }); /* ready 함수 */
     </script>
 </th:block>
