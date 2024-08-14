@@ -4,72 +4,117 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<div class="postCreate container w-50">
-		<div class="d-flex justify-content-center align-items-center mb-3">
-			<input type="text"class="form-control col-8" id="restaurantsName" name="restaurant_name" placeholder="상호명을 입력하세요">
-		</div>	
-		
-		<div class="d-flex justify-content-center align-items-center mb-3">
-			<input type="text" class="form-control col-7" id="address" name="address" placeholder="주소를 검색하세요"  readonly />
-			<button onclick="execDaumPostcode()" class="btn">검색</button>
-		</div>
-		
-		<div class="d-flex justify-content-center align-items-center mb-3">
-			<input type="text" class="form-control col-4" id="visitDate" name="visitDate" placeholder="언제 방문하셨나요?">
-		
-		
-			<select id="category" class="custom-select ml-1 col-4">
-				<option selected>선택해주세요.</option>
-				<option value="한식" class="font-weight-bold">한식</option>
-				<option value="중식" class="font-weight-bold">중식</option>
-				<option value="일식" class="font-weight-bold">일식</option>
-				<option value="양식" class="font-weight-bold">양식</option>
-				<option value="기타" class="font-weight-bold">기타</option>	
-			</select>
-		</div>
-		
-		<div class="text-center m-5">
-			<h4 class="font-weight-bold">음식은 어떠셨나요?</h4>
-			<div class="ratingStars">
-				<input type="radio" name="rating" value="5" id="rate1" class="rateRadio"><label for="rate1">⭐</label>
-				<input type="radio" name="rating" value="4" id="rate2" class="rateRadio"><label for="rate2">⭐</label>
-				<input type="radio" name="rating" value="3" id="rate3" class="rateRadio"><label for="rate3">⭐</label>
-				<input type="radio" name="rating" value="2" id="rate4" class="rateRadio"><label for="rate4">⭐</label>
-				<input type="radio" name="rating" value="1" id="rate5" class="rateRadio"><label for="rate5">⭐</label>
-				<!-- 별점 -->
+	<!-- 전체 컨테이너: 입력 폼과 지도 영역을 감쌈 -->
+	<div class="d-flex justify-content-between w-100">
+		<!-- 입력 폼 영역 -->
+		<div class="postCreate container w-50">
+			<div class="d-flex justify-content-center align-items-center mb-3">
+				<input type="text" class="form-control col-8" id="restaurantsName" name="restaurant_name" placeholder="상호명을 입력하세요">
+			</div>	
+
+			<div class="d-flex justify-content-center align-items-center mb-3">
+				<input type="text" class="form-control col-7" id="address" name="address" placeholder="주소를 검색하세요" readonly />
+				<button onclick="execDaumPostcode()" class="btn">검색</button>
+			</div>
+
+			<div class="d-flex justify-content-center align-items-center mb-3">
+				<input type="text" class="form-control col-4" id="visitDate" name="visitDate" placeholder="언제 방문하셨나요?">
+				<select id="category" class="custom-select ml-1 col-4">
+					<option selected>선택해주세요.</option>
+					<option value="한식" class="font-weight-bold">한식</option>
+					<option value="중식" class="font-weight-bold">중식</option>
+					<option value="일식" class="font-weight-bold">일식</option>
+					<option value="양식" class="font-weight-bold">양식</option>
+					<option value="기타" class="font-weight-bold">기타</option>	
+				</select>
+			</div>
+
+			<div class="text-center m-5">
+				<h4 class="font-weight-bold">음식은 어떠셨나요?</h4>
+				<div class="ratingStars">
+					<input type="radio" name="rating" value="5" id="rate1" class="rateRadio"><label for="rate1">⭐</label>
+					<input type="radio" name="rating" value="4" id="rate2" class="rateRadio"><label for="rate2">⭐</label>
+					<input type="radio" name="rating" value="3" id="rate3" class="rateRadio"><label for="rate3">⭐</label>
+					<input type="radio" name="rating" value="2" id="rate4" class="rateRadio"><label for="rate4">⭐</label>
+					<input type="radio" name="rating" value="1" id="rate5" class="rateRadio"><label for="rate5">⭐</label>
+				</div>
+			</div>
+
+			<div class="write-box border rounded">
+				<textarea id="writeTextArea" placeholder="간단하고 솔직하게 남겨보세요.(내용)" class="w-100 border-0 form-control"></textarea>
+				<div class="d-flex justify-content-between mt-3">
+					<div class="file-upload d-flex">
+						<!-- file 태그를 숨겨두고 이미지를 클릭하면 파일을 클릭한 것과 같은 효과를 준다. -->
+						<input type="file" id="file" accept=".jpg, .png, .gif" class="d-none">
+						<a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
+						<div id="fileName" class="ml-2"></div>
+					</div>
+					<button id="writeBtn" class="btn text-white">업로드</button>
+				</div>
 			</div>
 		</div>
-		<div class="write-box border rounded ml-5">
-		<textarea id="writeTextArea" placeholder="간단하고 솔직하게 남겨보세요.(내용)" class="w-100 border-0 form-control"></textarea>
-		<div class="d-flex justify-content-between">
-			<div class="file-upload d-flex">
-				<!-- file 태그를 숨겨두고 이미지를 클릭하면 파일을 클릭한 것과 같은 효과를 준다. -->
-				<input type="file" id="file" accept=".jpg, .png, .gif" class="d-none">
-	
-				<!-- 이미지에 마우스 올리면 마우스 커서가 link로 변경 -->
-				<a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
-				<div id="fileName" class="ml-2"></div>
-			</div>
-			<button id="writeBtn" class="btn text-white">업로드</button>
-		</div>
+
+		<!-- 지도 영역 -->
+		<div id="map" style="width: 400px; height: 500px; margin-left: 20px;"></div>
 	</div>
 </section>
 
 <th:block layout:fragment="script">
     <script>
     function execDaumPostcode() {
-		var themeObj = {
-				   bgColor: "#E3EA19", //바탕 배경색
-				   emphTextColor: "#000" //강조 글자색
-				};
-			  
-		new daum.Postcode({
-			 theme: themeObj,
-			oncomplete: function(data) {
-            	document.getElementById('address').value = (data.sigungu+ " " + data.bname);
-			}
-		}).open();
-	}
+        var themeObj = {
+            bgColor: "#E3EA19", //바탕 배경색
+            emphTextColor: "#000" //강조 글자색
+        };
+
+        new daum.Postcode({
+            theme: themeObj,
+            oncomplete: function(data) {
+                document.getElementById('address').value = (data.sigungu + " " + data.bname);
+
+                // 주소로 좌표 검색
+                var geocoder = new kakao.maps.services.Geocoder();
+                geocoder.addressSearch(data.address, function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                        // 지도를 생성하고 특정 위치로 이동
+                        var map = new kakao.maps.Map(document.getElementById('map'), {
+                            center: coords,
+                            level: 3 // 지도의 확대 레벨
+                        });
+
+                        // 마커를 지도에 표시
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+
+                        // 인포윈도우로 장소에 대한 설명을 표시
+                        var infowindow = new kakao.maps.InfoWindow({
+                        	 content: '<div style="width:80px;text-align:center;padding:2px 0; font-size:10px;">식사를 하신 동네입니다.</div>',
+                        	    removable: true // 인포윈도우를 닫을 수 있는 x 버튼 추가
+                        });
+                        infowindow.open(map, marker);
+                        // 반경 원을 마커 중심으로 그리기
+                        var circle = new kakao.maps.Circle({
+                            center: coords,  // 원의 중심좌표를 마커의 좌표로 설정
+                            radius: 150,     // 반경 설정 (단위: 미터)
+                            strokeWeight: 5, // 원의 테두리 두께
+                            strokeColor: '#FF0000', // 테두리 색상
+                            strokeOpacity: 0.7, // 테두리의 투명도
+                            strokeStyle: 'solid', // 테두리의 스타일
+                            fillColor: '#FF0000', // 원 내부 색상
+                            fillOpacity: 0.3  // 원 내부의 투명도
+                        });
+
+                        // 원을 지도에 표시
+                        circle.setMap(map);
+                    }
+                });
+            }
+        }).open();
+    }
 
 
 		 $(document).ready(function() {
@@ -120,16 +165,26 @@
 					
 					
 					
+		
 					// 내용 비필수
 					let content = $('#writeTextArea').val();
 					
-					// 이미지 필수
+					// 필수 변수
 					let file = $('#file').val();
 					if (file == '') {
 						alert('파일을 업로드 해주세요');
 						return;
 					}
-					
+					let restaurantName = $('#restaurantsName').val();
+				    let address = $('#address').val();
+				    let visitDate = $('#visitDate').val();
+				    let category = $('#category').val();
+				    let rating = $('input[name="rating"]:checked').val();
+				    if (!restaurantName || !address || !visitDate || !category || !rating || !file) {
+				        alert('작성 또는 선택하지 않은 곳이 있습니다.');
+				        return;
+				      }
+				    
 					// 파일이 업로드 된 경우 확장자 체크
 					let ext = file.split('.').pop().toLowerCase(); // 파일 경로를 .으로 나누고 확장자가 있는 마지막 문자열을 가져온 후 모두 소문자로 변경
 					if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
@@ -140,6 +195,11 @@
 					
 					// 폼태그를 자바스크립트에서 만든다.
 					let formData = new FormData();
+					formData.append("restaurantName", restaurantName);
+				    formData.append("address", address);
+				    formData.append("visitDate", visitDate);
+				    formData.append("category", category);
+				    formData.append("rating", rating);
 					formData.append("content", content);
 					formData.append("file", $('#file')[0].files[0]); // $('#file')[0]은 첫번째 input file 태그를 의미, files[0]는 업로드된 첫번째 파일
 					
@@ -162,9 +222,11 @@
 							} else {
 								alert(data.error_message);
 							}
+							 window.location.href = "/timeline/timeline-view"; 
 						}
+					
 						, error: function(e) {
-							alert("글 저장에 실패했습니다. 관리자에게 문의해주세요.");
+							alert("글 작성에 실패했습니다. 관리자에게 문의해주세요.");
 						}
 					});  // --- ajax 끝
 				});
