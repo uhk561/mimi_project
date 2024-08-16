@@ -13,18 +13,18 @@ header {height:80px; background-color:#E3EA19; position:fixed; z-index: 999;}
 #writeBtn {background-color:#E3EA19;}
 #serachBtn {background-color:#E3EA19;}
 .comment-btn {background-color:#E3EA19;}
-
+/* .postCreate {margin-left: 500px;} */
 
 /*  글쓰기 별점 선택 부분 */
-.ratingStars { border: 0; direction: rtl;}
-.ratingStars label {font-size: 3em; /* 별 크기 */
+.pointStars { border: 0; direction: rtl;}
+.pointStars label {font-size: 3em; /* 별 크기 */
     color: transparent; /* 별 노란색 컬러 제거 */
     text-shadow: 0 0 0 #f0f0f0; /* 선택되기 전  색상 부여 */}
-.rateRadio {display: none;}
+.pointRadio {display: none;}
 
-.ratingStars label:hover {text-shadow: 0 0 0 #fdb900;}
-.ratingStars label:hover ~ label{text-shadow: 0 0 0 #fdb900;}
-.ratingStars input[type=radio]:checked ~ label{
+.pointStars label:hover {text-shadow: 0 0 0 #fdb900;}
+.pointStars label:hover ~ label{text-shadow: 0 0 0 #fdb900;}
+.pointStars input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 #fdb900; /* 마우스 클릭 체크 */
 }
 
@@ -45,5 +45,5 @@ header {height:80px; background-color:#E3EA19; position:fixed; z-index: 999;}
 
 .comment-input {width:670px;}
 
-#map {height:400px; width:500px;}
+#map {height:400px; width:500px; margin-left:20px; margin-top:100px;}
 

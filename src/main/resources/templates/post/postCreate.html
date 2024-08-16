@@ -5,7 +5,7 @@
       layout:decorate="~{layout/defaultLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
 	<!-- 전체 컨테이너: 입력 폼과 지도 영역을 감쌈 -->
-	<div class="d-flex justify-content-between w-100">
+	<div class="d-flex justify-content-center w-75">
 		<!-- 입력 폼 영역 -->
 		<div class="postCreate container w-50">
 			<div class="d-flex justify-content-center align-items-center mb-3">
@@ -31,12 +31,12 @@
 
 			<div class="text-center m-5">
 				<h4 class="font-weight-bold">음식은 어떠셨나요?</h4>
-				<div class="ratingStars">
-					<input type="radio" name="rating" value="5" id="rate1" class="rateRadio"><label for="rate1">⭐</label>
-					<input type="radio" name="rating" value="4" id="rate2" class="rateRadio"><label for="rate2">⭐</label>
-					<input type="radio" name="rating" value="3" id="rate3" class="rateRadio"><label for="rate3">⭐</label>
-					<input type="radio" name="rating" value="2" id="rate4" class="rateRadio"><label for="rate4">⭐</label>
-					<input type="radio" name="rating" value="1" id="rate5" class="rateRadio"><label for="rate5">⭐</label>
+				<div class="pointStars">
+					<input type="radio" name="point" value="5" id="point1" class="pointRadio"><label for="point1">⭐</label>
+					<input type="radio" name="point" value="4" id="point2" class="pointRadio"><label for="point2">⭐</label>
+					<input type="radio" name="point" value="3" id="point3" class="pointRadio"><label for="point3">⭐</label>
+					<input type="radio" name="point" value="2" id="point4" class="pointRadio"><label for="point4">⭐</label>
+					<input type="radio" name="point" value="1" id="point5" class="pointRadio"><label for="point5">⭐</label>
 				</div>
 			</div>
 
@@ -55,7 +55,7 @@
 		</div>
 
 		<!-- 지도 영역 -->
-		<div id="map" style="width: 400px; height: 500px; margin-left: 20px;"></div>
+		<div id="map"></div>
 	</div>
 </section>
 
@@ -99,7 +99,7 @@
                         // 반경 원을 마커 중심으로 그리기
                         var circle = new kakao.maps.Circle({
                             center: coords,  // 원의 중심좌표를 마커의 좌표로 설정
-                            radius: 150,     // 반경 설정 (단위: 미터)
+                            radius: 200,     // 반경 설정 (단위: 미터)
                             strokeWeight: 5, // 원의 테두리 두께
                             strokeColor: '#FF0000', // 테두리 색상
                             strokeOpacity: 0.7, // 테두리의 투명도
@@ -125,6 +125,7 @@
 			 $('#visitDate').datepicker({
 				 maxDate:0
                  })   /* 데이트 피커 끝*/
+                 
                  $("#fileUploadBtn").on('click', function(e) {
      				e.preventDefault(); // 위로 올라가는 현상 방지
      				//alert("클릭");
@@ -177,14 +178,14 @@
 					}
 					let restaurantName = $('#restaurantsName').val();
 				    let address = $('#address').val();
-				    let visitDate = $('#visitDate').val();
+				    let visitDateText = $('#visitDate').val()
+				    let visitDate = visitDateText.substring(0, visitDateText.length - 3);
 				    let category = $('#category').val();
-				    let rating = $('input[name="rating"]:checked').val();
-				    if (!restaurantName || !address || !visitDate || !category || !rating || !file) {
+				    let point = $('input[name="point"]:checked').val();
+				    if (!restaurantName || !address || !visitDate || !category || !point || !file) {
 				        alert('작성 또는 선택하지 않은 곳이 있습니다.');
 				        return;
 				      }
-				    
 					// 파일이 업로드 된 경우 확장자 체크
 					let ext = file.split('.').pop().toLowerCase(); // 파일 경로를 .으로 나누고 확장자가 있는 마지막 문자열을 가져온 후 모두 소문자로 변경
 					if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
@@ -199,9 +200,10 @@
 				    formData.append("address", address);
 				    formData.append("visitDate", visitDate);
 				    formData.append("category", category);
-				    formData.append("rating", rating);
+				    formData.append("point", point);
 					formData.append("content", content);
 					formData.append("file", $('#file')[0].files[0]); // $('#file')[0]은 첫번째 input file 태그를 의미, files[0]는 업로드된 첫번째 파일
+					
 					
 					// AJAX form 데이터 전송
 					$.ajax({
@@ -227,8 +229,8 @@
 					
 						, error: function(e) {
 							alert("글 작성에 실패했습니다. 관리자에게 문의해주세요.");
-						}
-					});  // --- ajax 끝
+						} 
+					});  // --- ajax 끝 
 				});
 		 }); /* ready 함수 */
     </script>

@@ -21,10 +21,10 @@
 				<summary class="">필터</summary>
 				<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
 				
-				<li><label for="latest">한식</label><input type="radio" name="range" value="최신순" id="latest"></li>
-				<li><label for="highPoint">일식</label><input type="radio" name="range" value="별점순" id="highPoint"></li>
-				<li><label for="highPoint">중식</label><input type="radio" name="range" value="별점순" id="highPoint"></li>
-				<li><label for="highPoint">양식</label><input type="radio" name="range" value="별점순" id="highPoint"></li>
+				<li><label for="latest">한식</label><input type="radio" name="range" value="한식" ></li>
+				<li><label for="highPoint">일식</label><input type="radio" name="range" value="일식"></li>
+				<li><label for="highPoint">중식</label><input type="radio" name="range" value="중식"></li>
+				<li><label for="highPoint">양식</label><input type="radio" name="range" value="양식"></li>
 			
 				
 			</details>
@@ -34,8 +34,15 @@
     
 	<!-- 타임라인 영역 -->
 	<div class="contents-box container">
-	
-		<a href="/post/post-create-view" class="d-flex justify-content-center">
+		<!-- 글쓰기 페이지 로그인 안했을 경우 -->
+		<a th:unless="${session.userId != null}" href="/user/sign-in-view" class="d-flex justify-content-center" th:data-user-id="${session.userId}">
+            <input type="text" class="form-control w-75 text-center" placeholder="로그인 후 방문하신 곳에 대해 간단히 남겨보시는 건 어떠세요?">
+            <div class="d-flex justify-content-between">
+				<button class="btn">작성하기</button>
+			</div>
+		</a>
+		<!-- 글쓰기 페이지 로그인 했을 경우 -->
+		<a th:if="${session.userId != null}" href="/post/post-create-view" class="d-flex justify-content-center" th:data-user-id="${session.userId}">
             <input type="text" class="form-control w-75 text-center" placeholder="방문하신 곳에 대해 간단히 남겨보시는 건 어떠세요?">
             <div class="d-flex justify-content-between">
 				<button class="btn">작성하기</button>
@@ -118,5 +125,46 @@
 			}
 		}).open();
 	}
+    
+    // 댓글 쓰기
+    $(".comment-btn").on('click', function() {
+		let userId = $(this).data("user-id");
+		if (!userId) {
+			// 비로그인
+			alert("로그인을 해주세요.");
+			location.href = "/user/sign-in-view";
+			return;
+		}
+		
+		let postId = $(this).data("post-id"); // data-post-id="${}"
+		
+		let content = $(this).siblings("input").val().trim();
+		console.log(content);
+		
+		if (!content) {
+			alert("댓글 내용을 입력하세요.");
+			return;
+		}
+		
+		$.ajax({
+			type:"post"
+			, url:"/comment/create"
+			, data:{"postId":postId, "content":content}
+			, success:function(data) {
+				if (data.code == 200) {
+					location.reload(true);
+				} else if (data.code == 403) {
+					// 비로그인
+					alert(data.error_message);
+					location.href = "/user/sign-in-view";
+				} else{
+					alert(data.error_message);
+				}
+			}
+			, error:function(e) {
+				alert("댓글 쓰기에 실패했습니다.");
+			}
+		});
+	});
     </script>
 </th:block>
