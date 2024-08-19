@@ -23,4 +23,46 @@
 		)
 	</insert>
 	
+	
+	<select id="selectCommentList" resultType="com.mimi.comment.domain.Comment">
+		SELECT
+			`id`
+			,`postId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`comment`
+	</select>
+	
+	<select id="selectCommentListByPostId" parameterType="int" resultType="com.mimi.comment.domain.Comment">
+		SELECT
+			`id`
+			,`postId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`comment`
+		WHERE
+			`postId` = #{postId}
+	</select>
+	
+	<delete id="deleteCommentById" parameterType="int">
+		DELETE
+		FROM	
+			`comment`
+		WHERE
+			`id` =  #{id}
+	</delete>
+	
+	<delete id="deleteCommentsByPostId" parameterType="int">
+		DELETE
+		FROM	
+			`comment`
+		WHERE
+			`postId` =  #{postId}
+	</delete>
 </mapper>
