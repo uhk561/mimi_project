@@ -73,6 +73,9 @@
 
 				<!-- 별점 -->
 				<div class="card-point m-3">
+					<!-- <div th:each="i : ${#numbers.sequence(1, 5)}">
+       					<span th:classappend="${i <= cardView.post.point} ? '' : 'no'">⭐</span>
+   					</div>  -->
 					<div th:if="${cardView.post.point == 5}">
 						<span>⭐</span>
 						<span>⭐</span>
