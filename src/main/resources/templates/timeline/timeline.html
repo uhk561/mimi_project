@@ -5,28 +5,31 @@
       layout:decorate="~{layout/defaultLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
 	<div class="sideBar">
-		<div id="search" class="d-flex align-items-center">
-			<input id="addressSerach" type="text" class="form-control ml-3 w-75" name="addressSerach" placeholder="지역을 검색해보세요"  readonly />
-			<a href="#" id="serachBtn" onclick="execDaumPostcode()"><img width="35" src="https://cdn-icons-png.freepik.com/256/13924/13924517.png?semt=ais_hybrid"></a>
-		</div>
-        <div class="range mt-3">
+        <div class="sort mt-1">
 			<h5>정렬</h5>
-				<input type="radio" name="range" value="최신순" id="latest" checked><label for="latest">최신순</label>
-				<input type="radio" name="range" value="별점순" id="highPoint"><label for="highPoint">별점순</label>
-				
-				
+			<input type="radio" name="sort" value="최신순" id="latest" checked><label for="latest" class="mr-2">최신순</label>
+			<input type="radio" name="sort" value="별점순" id="highPoint"><label for="highPoint">별점순</label>
+		</div>	
+		<hr>
+		<div id="search" class="d-flex align-items-center m-2">
+			<input id="addressSerach" type="text" class="form-control ml-3 w-75" name="addressSerach" placeholder="지역을 검색해보세요"  readonly />
+			<a href="#" id="addressSerachBtn" onclick="execDaumPostcode()"><img width="35" src="https://cdn-icons-png.freepik.com/256/13924/13924517.png?semt=ais_hybrid"></a>
+		</div>
+		
+		<div class="range">	
 			<details>
 				<summary class="">필터</summary>
 				<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
 				
-				<li><label for="latest">한식</label><input type="radio" name="range" value="한식" ></li>
-				<li><label for="highPoint">일식</label><input type="radio" name="range" value="일식"></li>
-				<li><label for="highPoint">중식</label><input type="radio" name="range" value="중식"></li>
-				<li><label for="highPoint">양식</label><input type="radio" name="range" value="양식"></li>
+				<li><label for="range1">한식</label><input type="radio" name="range" id="range1" value="한식" class="ml-2"></li>
+				<li><label for="range2">일식</label><input type="radio" name="range" id="range2" value="일식" class="ml-2"></li>
+				<li><label for="range3">중식</label><input type="radio" name="range" id="range3" value="중식" class="ml-2"></li>
+				<li><label for="range4">양식</label><input type="radio" name="range" id="range4" value="양식" class="ml-2"></li>
 			
 				
 			</details>
 		</div>
+		<button id="se" class="btn m-2">결과 조회</button>
 	</div> <!-- side bar 끝 -->
     
     
@@ -72,11 +75,11 @@
 				</div>
 
 				<!-- 별점 -->
-				<div class="card-point m-3">
-					<!-- <div th:each="i : ${#numbers.sequence(1, 5)}">
-       					<span th:classappend="${i <= cardView.post.point} ? '' : 'no'">⭐</span>
-   					</div>  -->
-					<div th:if="${cardView.post.point == 5}">
+				<div class="card-point m-1">
+					<span th:each="i : ${#numbers.sequence(1, 5)}">
+       					<span class="star" th:classappend="${i <= cardView.post.point} ? '' : 'no'">⭐</span>
+   					</span>
+					<!-- <div th:if="${cardView.post.point == 5}">
 						<span>⭐</span>
 						<span>⭐</span>
 						<span>⭐</span>
@@ -110,7 +113,7 @@
 						<span class="no">⭐</span>
 						<span class="no">⭐</span>
 						<span class="no">⭐</span>
-					</div>
+					</div> -->
 				</div>
 
 				<!-- 글 -->
@@ -132,7 +135,7 @@
 						<div th:text="${commentView.comment.content}" class="mx-2" >댓글 내용임</div>
 
 						<!-- 댓글 삭제(자신의 댓글만 가능) -->
-						<a href="#"  th:if="${session.userId == commentView.comment.userId}" class="comment-del-btn ml-3">
+						<a href="#" class="comment-del-btn" th:if="${session.userId == commentView.comment.userId}" th:data-comment-id="${commentView.comment.id}">
 							<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
 						</a>
 					</div>
@@ -228,6 +231,12 @@
 			});
 		});
 		
+		
+		// 정렬
+		$('input[name="sort"]:checked').on('click', function() {
+			let sort = $('input[name="sort"]:checked').val();
+			alert(sort);
+		})
 	});
     </script>
 </th:block>

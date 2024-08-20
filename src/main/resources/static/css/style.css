@@ -11,7 +11,7 @@ header {height:80px; background-color:#E3EA19; position:fixed; z-index: 999;}
 .write-box {height:100px; width:800px;}
 .btn {background-color:#E3EA19;;}
 #writeBtn {background-color:#E3EA19;}
-#serachBtn {background-color:#E3EA19;}
+#addressSerachBtn {background-color:#E3EA19;}
 .comment-btn {background-color:#E3EA19;}
 .commentBox {width:80px;}
 /* .postCreate {margin-left: 500px;} */
@@ -32,7 +32,7 @@ header {height:80px; background-color:#E3EA19; position:fixed; z-index: 999;}
 /* 여기까지 별점 */
 .no {color: transparent; text-shadow: 0 0 0 #f0f0f0;}
 
-span {margin-left: -5px;}
+.star {margin-left: -5px; font-size:23px;}
 .shadow-box {width:550px; background-color:#ebebeb; margin-top:200px; box-shadow:5px 5px 5px 5px #BDC0C0;}
 .login-box {width:400px;}
 
