@@ -32,6 +32,10 @@ public class PostBO {
 		return postRepository.findByOrderByIdDesc();
 	}
 	
+	public List<PostEntity> getPostEntitySortList() {
+		return postRepository.findByOrderByPointDesc();
+	}
+	
 	
 	public PostEntity addPost(int userId, String userLoginId, String content, String restaurantName,
 			String address, Date visitDate, String category, int point, MultipartFile file) {

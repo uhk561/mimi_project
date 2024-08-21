@@ -7,8 +7,11 @@
 	<div class="sideBar">
         <div class="sort mt-1">
 			<h5>정렬</h5>
-			<input type="radio" name="sort" value="최신순" id="latest" checked><label for="latest" class="mr-2">최신순</label>
-			<input type="radio" name="sort" value="별점순" id="highPoint"><label for="highPoint">별점순</label>
+			<input type="radio" name="sort" value="1" id="latest" checked><label for="latest" class="mr-2">최신순</label>
+			<input type="radio" name="sort" value="2" id="highPoint"><label for="highPoint">별점순</label>
+			<!-- <a th:if="${sort != 0}" th:href="|/timeline/timeline-view?sort=${sort}|" class="mr-3">● 최신순</a>
+			<a th:if="${sort != 0}" th:href="|/timeline/timeline-view?sort=${sort}|">● 별점순</a> -->
+			
 		</div>	
 		<hr>
 		<div id="search" class="d-flex align-items-center m-2">
@@ -79,41 +82,6 @@
 					<span th:each="i : ${#numbers.sequence(1, 5)}">
        					<span class="star" th:classappend="${i <= cardView.post.point} ? '' : 'no'">⭐</span>
    					</span>
-					<!-- <div th:if="${cardView.post.point == 5}">
-						<span>⭐</span>
-						<span>⭐</span>
-						<span>⭐</span>
-						<span>⭐</span>
-						<span>⭐</span>
-					</div>
-					<div th:if="${cardView.post.point == 4}">
-						<span>⭐</span>
-						<span>⭐</span>
-						<span>⭐</span>
-						<span>⭐</span>
-						<span class="no">⭐</span>
-					</div>
-					<div th:if="${cardView.post.point == 3}">
-						<span>⭐</span>
-						<span>⭐</span>
-						<span>⭐</span>
-						<span class="no">⭐</span>
-						<span class="no">⭐</span>
-					</div>
-					<div th:if="${cardView.post.point == 2}">
-						<span>⭐</span>
-						<span>⭐</span>
-						<span class="no">⭐</span>
-						<span class="no">⭐</span>
-						<span class="no">⭐</span>
-					</div>
-					<div th:if="${cardView.post.point == 1}">
-						<span>⭐</span>
-						<span class="no">⭐</span>
-						<span class="no">⭐</span>
-						<span class="no">⭐</span>
-						<span class="no">⭐</span>
-					</div> -->
 				</div>
 
 				<!-- 글 -->
@@ -132,7 +100,7 @@
 					<!-- 댓글들 -->
 					<div th:each="commentView : ${cardView.commentList}" class="d-flex card-comment m-1">
 						<div th:text="${commentView.user.name}" class="font-weight-bold commentBox">댓글쓰니</div>
-						<div th:text="${commentView.comment.content}" class="mx-2" >댓글 내용임</div>
+						<div th:text="${commentView.comment.content}" class="mx-2">댓글 내용임</div>
 
 						<!-- 댓글 삭제(자신의 댓글만 가능) -->
 						<a href="#" class="comment-del-btn" th:if="${session.userId == commentView.comment.userId}" th:data-comment-id="${commentView.comment.id}">
@@ -166,6 +134,8 @@
 			}
 		}).open();
 	}
+    $(document).ready(function() {
+    	
     
     // 댓글 쓰기
     $(".comment-btn").on('click', function() {
@@ -206,6 +176,7 @@
 				alert("댓글 쓰기에 실패했습니다.");
 			}
 		});
+    });
 		
 		// 댓글 삭제
 		$(".comment-del-btn").on('click', function(e) {
@@ -229,14 +200,26 @@
 					alert("댓글 삭제 하는데 실패했습니다.");
 				}
 			});
-		});
+   		});
 		
 		
 		// 정렬
-		$('input[name="sort"]:checked').on('click', function() {
-			let sort = $('input[name="sort"]:checked').val();
-			alert(sort);
-		})
-	});
+		   $("input[name='sort']").on('change', function() {
+			 let selectSort = $("input[name='sort']:checked").val();
+			 
+
+			 $.ajax({
+		            type: "GET",
+		            url: "/timeline/timeline-view",
+		            data: {sort: selectSort},
+		            success: function(data) {
+		            },
+		            error: function() {
+		                alert("카드를 업데이트하는 데 실패했습니다.");
+		            }
+		        });
+	   
+		});
+    });
     </script>
 </th:block>
