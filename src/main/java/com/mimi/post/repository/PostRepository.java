@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.mimi.post.entity.PostEntity;
 
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
-	public List<PostEntity> findByOrderByIdDesc();
+	public List<PostEntity> findByOrderByIdDesc(); // 기본(최신)
 	
-	public List<PostEntity> findByOrderByPointDesc();
-}
+	 public List<PostEntity> findByOrderByPointDesc(); // 별점순
+	}

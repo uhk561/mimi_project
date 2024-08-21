@@ -7,8 +7,8 @@
 	<div class="sideBar">
         <div class="sort mt-1">
 			<h5>정렬</h5>
-			<input type="radio" name="sort" value="1" id="latest" checked><label for="latest" class="mr-2">최신순</label>
-			<input type="radio" name="sort" value="2" id="highPoint"><label for="highPoint">별점순</label>
+			<input type="radio" name="sort" value="1" id="latest" checked onclick="sortTimeline(1)"><label for="latest" class="mr-2">최신순</label>
+			<input type="radio" name="sort" value="2" id="highPoint" onclick="sortTimeline(2)"><label for="highPoint">별점순</label>
 			<!-- <a th:if="${sort != 0}" th:href="|/timeline/timeline-view?sort=${sort}|" class="mr-3">● 최신순</a>
 			<a th:if="${sort != 0}" th:href="|/timeline/timeline-view?sort=${sort}|">● 별점순</a> -->
 			
@@ -201,25 +201,11 @@
 				}
 			});
    		});
+		function sortTimeline(sortOption) {
+		    window.location.href = `/timeline/timeline-view?sort=${sortOption}`;
+		}
 		
 		
-		// 정렬
-		   $("input[name='sort']").on('change', function() {
-			 let selectSort = $("input[name='sort']:checked").val();
-			 
-
-			 $.ajax({
-		            type: "GET",
-		            url: "/timeline/timeline-view",
-		            data: {sort: selectSort},
-		            success: function(data) {
-		            },
-		            error: function() {
-		                alert("카드를 업데이트하는 데 실패했습니다.");
-		            }
-		        });
-	   
-		});
     });
     </script>
 </th:block>

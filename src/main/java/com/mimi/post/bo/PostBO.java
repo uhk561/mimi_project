@@ -28,13 +28,14 @@ public class PostBO {
 	@Autowired
 	private FileManagerService fileManagerService;
 	
-	public List<PostEntity> getPostEntityList() {
-		return postRepository.findByOrderByIdDesc();
-	}
+	 public List<PostEntity> getPostEntityList(String sort) {
+	        if ("highPoint".equals(sort)) {
+	            return postRepository.findByOrderByPointDesc(); // 별점순 정렬
+	        } else {
+	            return postRepository.findByOrderByIdDesc(); // 변수값이 기본이면 그대로
+	        }
+	    }
 	
-	public List<PostEntity> getPostEntitySortList() {
-		return postRepository.findByOrderByPointDesc();
-	}
 	
 	
 	public PostEntity addPost(int userId, String userLoginId, String content, String restaurantName,

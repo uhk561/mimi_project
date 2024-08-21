@@ -20,21 +20,15 @@ public class TimelineContriller {
 	private TimelineBO timelineBO;
 	
 	@GetMapping("/timeline/timeline-view")
-	public String timelineView(Model model, HttpSession session, 
-			@RequestParam("sort") Integer sort) {
-		if (sort == 1) {
+	public String timelineView(Model model, HttpSession session,
+			 @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort) {
+		
 			Integer userId = (Integer)session.getAttribute("userId");
-			List<CardView> cardViewList = timelineBO.generateCardViewList(userId);
+			List<CardView> cardViewList = timelineBO.generateCardViewList(userId, sort);
 			
 			
 			model.addAttribute("cardViewList", cardViewList);
 
-		} else if (sort == 2) {
-			Integer userId = (Integer)session.getAttribute("userId");
-			List<CardView> cardViewList = timelineBO.generateCardViewSortList(userId);
-			
-			model.addAttribute("cardViewList", cardViewList);
-		}
 			return "timeline/timeline";
 	}
 }
