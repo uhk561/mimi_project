@@ -7,10 +7,8 @@
 	<div class="sideBar">
         <div class="sort mt-1">
 			<h5>정렬</h5>
-			<input type="radio" name="sort" value="1" id="latest" checked onclick="sortTimeline(1)"><label for="latest" class="mr-2">최신순</label>
-			<input type="radio" name="sort" value="2" id="highPoint" onclick="sortTimeline(2)"><label for="highPoint">별점순</label>
-			<!-- <a th:if="${sort != 0}" th:href="|/timeline/timeline-view?sort=${sort}|" class="mr-3">● 최신순</a>
-			<a th:if="${sort != 0}" th:href="|/timeline/timeline-view?sort=${sort}|">● 별점순</a> -->
+			<input type="radio" name="sort" value="latest" id="latest"><label for="latest" class="mr-2">최신순</label>
+			<input type="radio" name="sort" value="highPoint" id="highPoint"><label for="highPoint">별점순</label>
 			
 		</div>	
 		<hr>
@@ -35,8 +33,7 @@
 		<button id="se" class="btn m-2">결과 조회</button>
 	</div> <!-- side bar 끝 -->
     
-    
-	<!-- 타임라인 영역 -->
+    <!-- 타임라인 영역 -->
 	<div class="contents-box container">
 		<!-- 글쓰기 페이지 로그인 안했을 경우 -->
 		<a th:unless="${session.userId != null}" href="/user/sign-in-view" class="d-flex justify-content-center" th:data-user-id="${session.userId}">
@@ -116,7 +113,7 @@
 				</div> <!-- 댓글 끝 -->
 			</div> <!-- 카드 끝 -->
 		</div> <!-- 타임라인 박스 끝 -->
-	</div>
+	</div>	
 </section>
 
 <th:block layout:fragment="script">
@@ -136,14 +133,29 @@
 	}
     $(document).ready(function() {
     	
+  /*   	 $("input[name='sort']").on('change', function() {
+             let sort = $(this).val();
+             console.log(sort)
+         }); */
     	 $("input[name='sort']").on('change', function() {
-             const selectedSort = $(this).val();
-             const currentUrl = window.location.href;
-             const newUrl = new URL(currentUrl);
-             newUrl.searchParams.set('sort', selectedSort);
+             let sort = $(this).val();
+             let currentUrl = window.location.href;
+             let newUrl = new URL(currentUrl);
+             newUrl.searchParams.set('sort', sort);
              window.location.href = newUrl.toString();
          });
-    	
+    /* 	  $.ajax({
+              type: "GET",
+              url: "/timeline/timeline-view",
+              data: {"sort":sort},
+              success: function(data) {
+            	  window.location.href = "/timeline/timeline-view"
+                 // $(".timeline-box").html(response); // 서버에서 반환된 HTML로 카드 업데이트
+              },
+              error: function() {
+                  alert("카드를 업데이트하는 데 실패했습니다.");
+              }
+          }); */
     
     // 댓글 쓰기
     $(".comment-btn").on('click', function() {
