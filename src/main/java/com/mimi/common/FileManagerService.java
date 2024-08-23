@@ -15,7 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class FileManagerService {
 	// 실제 업로드가 된 이미지가 저장될 서버의 경로
-	public static final String FILE_UPLOAD_PATH = "D:\\정순관\\7_project\\MIMI\\workspace\\images/";
+	
+	// 수업pc
+	//public static final String FILE_UPLOAD_PATH = "D:\\정순관\\7_project\\MIMI\\workspace\\images/";
+	
+	// 노트북
+	public static final String FILE_UPLOAD_PATH = "C:\\Users\\uhk56\\OneDrive\\Desktop\\개발\\7_mimi project\\MIMI\\mimi_workspace\\images/";
 		//public static final String FILE_UPLOAD_PATH = "home/home/home/home/home"
 		
 

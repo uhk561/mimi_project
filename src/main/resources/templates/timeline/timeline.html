@@ -7,13 +7,13 @@
 	<div class="sideBar">
         <div class="sort mt-1">
 			<h5>정렬</h5>
-			<input type="radio" name="sort" value="latest" id="latest"><label for="latest" class="mr-2">최신순</label>
-			<input type="radio" name="sort" value="highPoint" id="highPoint"><label for="highPoint">별점순</label>
+			<input type="radio" name="sort" value="latest" id="latest" th:checked="${selectedSort == 'latest'}"><label for="latest" class="mr-2">최신순</label>
+			<input type="radio" name="sort" value="highPoint" id="highPoint" th:checked="${selectedSort == 'highPoint'}"><label for="highPoint">별점순</label>
 			
 		</div>	
 		<hr>
 		<div id="search" class="d-flex align-items-center m-2">
-			<input id="addressSerach" type="text" class="form-control ml-3 w-75" name="addressSerach" placeholder="지역을 검색해보세요"  readonly />
+			<input id="addressSerach" type="text" class="form-control ml-3 w-75" name="addressSerach" placeholder="지역을 검색해보세요">
 			<a href="#" id="addressSerachBtn" onclick="execDaumPostcode()"><img width="35" src="https://cdn-icons-png.freepik.com/256/13924/13924517.png?semt=ais_hybrid"></a>
 		</div>
 		
@@ -133,29 +133,19 @@
 	}
     $(document).ready(function() {
     	
-  /*   	 $("input[name='sort']").on('change', function() {
-             let sort = $(this).val();
-             console.log(sort)
-         }); */
-    	 $("input[name='sort']").on('change', function() {
-             let sort = $(this).val();
-             let currentUrl = window.location.href;
-             let newUrl = new URL(currentUrl);
-             newUrl.searchParams.set('sort', sort);
-             window.location.href = newUrl.toString();
-         });
-    /* 	  $.ajax({
-              type: "GET",
-              url: "/timeline/timeline-view",
-              data: {"sort":sort},
-              success: function(data) {
-            	  window.location.href = "/timeline/timeline-view"
-                 // $(".timeline-box").html(response); // 서버에서 반환된 HTML로 카드 업데이트
-              },
-              error: function() {
-                  alert("카드를 업데이트하는 데 실패했습니다.");
-              }
-          }); */
+     	   $("input[name='sort']").on('change', function() {
+        let sort = $(this).val();
+        
+        // Ajax 요청으로 새로운 URL로 리다이렉트
+        $.ajax({
+            type: "GET",
+            url: "/timeline/timeline-view",
+            data: { sort: sort },
+            success: function() {
+                window.location.href = "/timeline/timeline-view?sort=" + sort;
+            }
+        });
+    });
     
     // 댓글 쓰기
     $(".comment-btn").on('click', function() {

@@ -28,6 +28,7 @@ public class TimelineContriller {
 			
 			
 			model.addAttribute("cardViewList", cardViewList);
+			model.addAttribute("selectedSort", sort);
 
 			return "timeline/timeline";
 	}
