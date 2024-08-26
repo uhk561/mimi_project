@@ -30,7 +30,7 @@
 				
 			</details>
 		</div>
-		<button id="se" class="btn m-2">결과 조회</button>
+		<button id="searchBtn" class="btn m-2">결과 조회</button>
 	</div> <!-- side bar 끝 -->
     
     <!-- 타임라인 영역 -->
@@ -133,10 +133,10 @@
 	}
     $(document).ready(function() {
     	
-     	   $("input[name='sort']").on('change', function() {
+     	$("input[name='sort']").on('change', function() {
         let sort = $(this).val();
         
-        // Ajax 요청으로 새로운 URL로 리다이렉트
+        
         $.ajax({
             type: "GET",
             url: "/timeline/timeline-view",
@@ -146,6 +146,31 @@
             }
         });
     });
+    
+     	   
+    //필터
+    	$("#searchBtn").on('click', function() {
+    		let addressSerach = $('#addressSerach').val();
+			let range = $('input[name="range"]:checked').val();
+			
+			if (!addressSerach && !range) {
+		        alert('조회할 항목이 없습니다.');
+		        return;
+		      }
+			  let params = {};
+			    if (addressSerach) params.addressSerach = addressSerach;
+			    if (range) params.range = range;
+		    
+			    $.ajax({
+			        type: "GET",
+			        url: "/timeline/timeline-view",
+			        data: params,
+			        success: function() {
+			            let searchParams = $.param(params); 
+			            window.location.href = "/timeline/timeline-view?" + searchParams;
+			        }
+    		})
+    	});
     
     // 댓글 쓰기
     $(".comment-btn").on('click', function() {

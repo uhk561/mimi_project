@@ -21,14 +21,19 @@ public class TimelineContriller {
 	
 	@GetMapping("/timeline/timeline-view")
 	public String timelineView(Model model, HttpSession session,
-			 @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort) {
+			 @RequestParam(value = "sort", required = false, defaultValue = "latest") String sort,
+			 @RequestParam(value = "addressSearch", required = false) String addressSearch,
+	         @RequestParam(value = "range", required = false) String range) {
+			
 		
 			Integer userId = (Integer)session.getAttribute("userId");
 			List<CardView> cardViewList = timelineBO.generateCardViewList(userId, sort);
 			
 			
 			model.addAttribute("cardViewList", cardViewList);
-			model.addAttribute("selectedSort", sort);
+			model.addAttribute("selectedSort", sort); // 선택한 값을 뷰에서 유지시키기위해 모델에 추가
+			model.addAttribute("addressSearch", addressSearch); // 선택한 값을 뷰에서 유지시키기위해 모델에 추가
+		    model.addAttribute("selectedRange", range);  // 선택한 값을 뷰에서 유지시키기위해 모델에 추가
 
 			return "timeline/timeline";
 	}
