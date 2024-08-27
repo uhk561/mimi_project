@@ -27,11 +27,12 @@ public class TimelineBO {
 	private CommentBO commentBO;
 	
 	// input: userId(로그인 된 사람 번호)   output: List<CardView>
-		public List<CardView> generateCardViewList(Integer userId, String sort) {
+		public List<CardView> generateCardViewList(Integer userId, String sort,  String addressSearch,
+				 String range) {
 			List<CardView> cardViewList = new ArrayList<>();
 
 			// 글목록을 가져온다. List<PostEntity>
-			List<PostEntity> postList = postBO.getPostEntityList(sort);
+			List<PostEntity> postList = postBO.getPostEntityList(sort, addressSearch, range);
 
 			// 글목록 반복문 순회
 			// PostEntity => CardView     -> cardViewList에 넣기

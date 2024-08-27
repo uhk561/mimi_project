@@ -27,7 +27,7 @@ public class TimelineContriller {
 			
 		
 			Integer userId = (Integer)session.getAttribute("userId");
-			List<CardView> cardViewList = timelineBO.generateCardViewList(userId, sort);
+			List<CardView> cardViewList = timelineBO.generateCardViewList(userId, sort, addressSearch, range);
 			
 			
 			model.addAttribute("cardViewList", cardViewList);

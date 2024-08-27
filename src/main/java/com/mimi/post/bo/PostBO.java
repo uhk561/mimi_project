@@ -28,15 +28,37 @@ public class PostBO {
 	@Autowired
 	private FileManagerService fileManagerService;
 	
-	 public List<PostEntity> getPostEntityList(String sort) {
+	 public List<PostEntity> getPostEntityList(String sort, String addressSearch, String category) {
 	        if ("highPoint".equals(sort)) {
-	            return postRepository.findByOrderByPointDesc(); // 별점순 정렬
-	        } else {
-	            return postRepository.findByOrderByIdDesc(); // 변수값이 기본이면 그대로
+	            if (addressSearch != null && !addressSearch.isEmpty()) {
+	                if (category != null && !category.isEmpty()) {
+	                    return postRepository.findByAddressContainingAndCategoryOrderByPointDesc(addressSearch, category);
+	                } else {
+	                    return postRepository.findByAddressContainingOrderByPointDesc(addressSearch);
+	                }
+	            } else {
+	                if (category != null && !category.isEmpty()) {
+	                    return postRepository.findByCategoryOrderByPointDesc(category);
+	                } else {
+	                    return postRepository.findByOrderByPointDesc();
+	                }
+	            }
+	        } else { // 최신순 정렬이 기본
+	            if (addressSearch != null && !addressSearch.isEmpty()) {
+	                if (category != null && !category.isEmpty()) {
+	                    return postRepository.findByAddressContainingAndCategoryOrderByIdDesc(addressSearch, category);
+	                } else {
+	                    return postRepository.findByAddressContainingOrderByIdDesc(addressSearch);
+	                }
+	            } else {
+	                if (category != null && !category.isEmpty()) {
+	                    return postRepository.findByCategoryOrderByIdDesc(category);
+	                } else {
+	                    return postRepository.findByOrderByIdDesc();
+	                }
+	            }
 	        }
 	    }
-	
-	
 	
 	public PostEntity addPost(int userId, String userLoginId, String content, String restaurantName,
 			String address, Date visitDate, String category, int point, MultipartFile file) {

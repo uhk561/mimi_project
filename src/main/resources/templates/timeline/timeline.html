@@ -14,7 +14,7 @@
 		<hr>
 		<div id="search" class="d-flex align-items-center m-2">
 			<input id="addressSerach" type="text" class="form-control ml-3 w-75" name="addressSerach" placeholder="지역을 검색해보세요">
-			<a href="#" id="addressSerachBtn" onclick="execDaumPostcode()"><img width="35" src="https://cdn-icons-png.freepik.com/256/13924/13924517.png?semt=ais_hybrid"></a>
+			<!-- <a href="#" id="addressSerachBtn" onclick="execDaumPostcode()"><img width="35" src="https://cdn-icons-png.freepik.com/256/13924/13924517.png?semt=ais_hybrid"></a> -->
 		</div>
 		
 		<div class="range">	
@@ -22,10 +22,10 @@
 				<summary class="">필터</summary>
 				<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
 				
-				<li><label for="range1">한식</label><input type="radio" name="range" id="range1" value="한식" class="ml-2"></li>
-				<li><label for="range2">일식</label><input type="radio" name="range" id="range2" value="일식" class="ml-2"></li>
-				<li><label for="range3">중식</label><input type="radio" name="range" id="range3" value="중식" class="ml-2"></li>
-				<li><label for="range4">양식</label><input type="radio" name="range" id="range4" value="양식" class="ml-2"></li>
+				<li><label for="range1">한식</label><input type="radio" name="range" id="range1" value="한식" class="ml-2" th:checked="${selectedRange == '한식'}"></li>
+				<li><label for="range2">일식</label><input type="radio" name="range" id="range2" value="일식" class="ml-2" th:checked="${selectedRange == '일식'}"></li>
+				<li><label for="range3">중식</label><input type="radio" name="range" id="range3" value="중식" class="ml-2" th:checked="${selectedRange == '중식'}"></li>
+				<li><label for="range4">양식</label><input type="radio" name="range" id="range4" value="양식" class="ml-2" th:checked="${selectedRange == '양식'}"></li>
 			
 				
 			</details>
@@ -69,7 +69,7 @@
 				<div class="card-img">
 					<img th:src="${cardView.post.imagePath}" src="https://cdn.pixabay.com/photo/2024/06/23/06/27/lake-8847415_1280.jpg" class="w-100" alt="본문 이미지">
 					<div class="d-flex justify-content-between">
-						<small th:text="${cardView.post.restaurantName}" class="text-secondary mx-2">상호명</small>
+						<small th:text="${cardView.post.restaurantName}+ | (${cardView.post.address})|" class="text-secondary mx-2">상호명</small>
 						<small th:text="|${cardView.post.visitDate} 방문|" class="text-secondary mx-2">20.01.01 방문</small>
 					</div>
 				</div>
@@ -118,7 +118,7 @@
 
 <th:block layout:fragment="script">
     <script>
-    function execDaumPostcode() {
+   /*  function execDaumPostcode() {
 		var themeObj = {
 				   bgColor: "#E3EA19", //바탕 배경색
 				   emphTextColor: "#000" //강조 글자색
@@ -130,7 +130,7 @@
             	document.getElementById('addressSerach').value = (data.sigungu+ " " + data.bname);
 			}
 		}).open();
-	}
+	} */
     $(document).ready(function() {
     	
      	$("input[name='sort']").on('change', function() {
