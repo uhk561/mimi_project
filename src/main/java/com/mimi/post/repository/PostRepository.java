@@ -14,6 +14,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 	 
 	 // 검색 조건 두 개 다 있으면서 별점순 
 	 public List<PostEntity> findByAddressContainingAndCategoryOrderByPointDesc(String address, String category);
+	 //public List<PostEntity> findByLowerAddressContainingAndCategoryOrderByPointDesc(String address, String category);
 	    
 	 // 위치검색만 있으면서 별점순
 	 public List<PostEntity> findByAddressContainingOrderByPointDesc(String address);
