@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script>
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
+    Kakao.init('e00e4d20e9b1d7be1847cfd3fbb574ad');
+
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+  </script>
+</head>
+
+<body>
+	   <p id="loginBtn">  <a id="kakao-login-btn" href="javascript:loginWithKakao()"><img src="./images/login.png" alt="로그인버튼"/></a></p>
+</body>
+ <script>
+  function loginWithKakao() {
+    Kakao.Auth.authorize({
+      redirectUri: 'http://localhost:8080/timeline/timeline-view'
+    });
+    let code = new URL(window.location.href).searchParams.get('code');
+    console.log(code);
+  }
+</script>
+</html>

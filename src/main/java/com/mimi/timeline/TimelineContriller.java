@@ -31,10 +31,12 @@ public class TimelineContriller {
 			
 			
 			model.addAttribute("cardViewList", cardViewList);
-			model.addAttribute("selectedSort", sort); // 선택한 값을 뷰에서 유지시키기위해 모델에 추가
-			model.addAttribute("addressSearch", addressSearch); // 선택한 값을 뷰에서 유지시키기위해 모델에 추가
-		    model.addAttribute("selectedRange", range);  // 선택한 값을 뷰에서 유지시키기위해 모델에 추가
+			model.addAttribute("selectedSort", sort); // 선택한 값을 페이지화면(뷰)에서 유지시키기위해 모델에 추가
+			model.addAttribute("addressSearch", addressSearch); // 선택한 값을 페이지화면(뷰)에서 유지시키기위해 모델에 추가
+		    model.addAttribute("selectedRange", range);  // 선택한 값을 페이지화면(뷰)에서 유지시키기위해 모델에 추가
 
 			return "timeline/timeline";
+			
 	}
+			
 }
