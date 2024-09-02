@@ -18,3 +18,8 @@ spring:
       format_sql: true
 mybatis:
   mapper-locations: mappers/*Mapper.xml 
+  kakao:
+    restapi:
+      key: bc61a7eba383ed7945ad2beef5162fb4
+    redirect:
+      uri: http://localhost:8080/oauth/kakao/Redirect
