@@ -129,7 +129,7 @@
 
 <th:block layout:fragment="script">
     <script>
-   /*  function execDaumPostcode() {
+   /*  function execDaumPostcode() {   // 메인화면에서는 필요없지만 어떻게될지몰라 지우지않고 주석처리
 		var themeObj = {
 				   bgColor: "#E3EA19", //바탕 배경색
 				   emphTextColor: "#000" //강조 글자색
@@ -144,20 +144,6 @@
 	} */
     $(document).ready(function() {
     	
-     	/* $("input[name='sort']").on('change', function() {
-        let sort = $(this).val();
-        
-        
-        $.ajax({
-            type: "GET",
-            url: "/timeline/timeline-view",
-            data: { sort: sort },
-            success: function() {
-                window.location.href = "/timeline/timeline-view?sort=" + sort;
-            }
-        });
-    });
-     */
      	   
      // 정렬 변경 시
      $("input[name='sort']").on('change', function() {
@@ -168,29 +154,6 @@
          window.location.href = "/timeline/timeline-view?" + params.toString();
      });
      
-    //필터
-    	/* $("#searchBtn").on('click', function() {
-    		let addressSerach = $('#addressSerach').val();
-			let range = $('input[name="range"]:checked').val();
-			
-			if (!addressSerach && !range) {
-		        alert('조회할 항목이 없습니다.');
-		        return;
-		      }
-			  let params = {};
-			    if (addressSerach) params.addressSerach = addressSerach;
-			    if (range) params.range = range;
-		    
-			    $.ajax({
-			        type: "GET",
-			        url: "/timeline/timeline-view",
-			        data: params,
-			        success: function() {
-			            let searchParams = $.param(params); 
-			            window.location.href = "/timeline/timeline-view?" + searchParams;
-			        }
-    		})
-    	}); */
     	
     	// 필터 적용 시
         $("#searchBtn").on('click', function() {
